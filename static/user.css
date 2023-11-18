@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-width: 1300px;
+    background-color: antiquewhite;
+}
+
+.dashboard {
+    min-width: 1200px;
+    width: 1200px;
+    padding: 2.5% 4%;
+    background-color: azure;
+    color: rgb(14, 51, 83);
+} 
+
+.dashboard .pane {
+    display: flex;
+}
+
+.dashboard .pane .left-pane {
+    margin: 5px;
+    padding: 5%;
+    background-color: aliceblue;
+    border: #15251c;
+    outline: #15251c;
+    width: 100%;
+}
+
+.dashboard .pane .left-pane .my-robopet .robopet{
+    display: flex;
+    padding: 2%;
+}
+
+.dashboard .pane .left-pane .my-robopet .robopet p{
+    margin: 5%;
+}
+
+.dashboard .pane .left-pane .my-robopet .return-btn {
+    width: 70px;
+    height: 40px;
+    background-color: rgb(129, 147, 168);
+    margin: 2px 7.5%;
+    display: block;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    cursor: pointer;
+    font-size: 14px;
+    color: #15251c;
+    font-weight:  600;
+}
+
+.dashboard .pane .left-pane .search-box {
+    margin: 15px;
+    position: relative;
+    width: 90%;
+    height: 50px;
+    padding: 8px 2.5%;
+}
+
+.dashboard .pane .left-pane .search-box input {
+    align-items: center;
+    height: 30px;
+    width: 100%;
+    border-radius: 15px;
+    padding: 15px 30px;
+    font-size: 14px;
+}
+
+.dashboard .pane .left-pane .search-box i{
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.dashboard .pane .right-pane {
+    margin: 5px;
+    padding: 5%;
+    background-color: aliceblue;
+    border: #15251c;
+    outline: #15251c;
+    width: 100%;
+}
+
+.dashboard .pane .right-pane .robopet-list .robopet{
+    display: flex;
+    padding: 2%;
+    margin: auto;
+    border: 1px solid black;
+    margin: 10px 0;
+    background-color: blanchedalmond;
+}
+
+.dashboard .pane .right-pane .robopet-list .robopet p{
+    padding: 10px;
+    margin: 20px 10px;
+}
+
+.dashboard .pane .right-pane .robopet-list .robopet button{
+    margin: 20px 10px;
+    padding: 10px;
+    height: 40px;
+}

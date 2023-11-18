@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Robopety</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',
+    filename='login.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>RoboPety</h1>
+      <br />
+      <form action="/login" method="post">
+        <h3>Email</h3>
+        <div class="input-box">
+          <input
+            type="text"
+            placeholder="Email"
+            name="email"
+            value="{{
+            request.form.email }}"
+          />
+        </div>
+        <h3>Password</h3>
+        <div class="input-box">
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value="{{
+            request.form.password }}"
+          />
+        </div>
+
+        <button class="btn" type="submit">Submit</button>
+      </form>
+      <div class="register-link">
+        <p>Don't have an account? <a href="/signup">signup</a></p>
+      </div>
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %}
+    </div>
+  </body>
+</html>
