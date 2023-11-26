@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RoboPety</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',
+    filename='user.css') }}"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="dashboard">
+      <h1>{{ username }}</h1>
+      <a href="/logout"> Log out </a>
+      <div class="pane">
+        <div class="left-pane">
+          <div class="my-robopet">
+            <h3>My RoboPet</h3>
+            {% if currentPet %}
+            <div class="robopet">
+              <img
+                src="{{ currentPet['image'] }}"
+                alt="RoboPet"
+                width="100px"
+                height="100px"
+              />
+              <p>{{ currentPet['name'] }}</p>
+            </div>
+            <button class="btn-return" id="btn-return">Return</button>
+            {% else %}
+              <div class="robopet">
+                <p>You do not have a RoboPet yet.</p>
+              </div>
+            {% endif %}
+          </div>
+          <div class="search-box">
+            <input
+              type="text"
+              class="search-field"
+              id="search-field"
+              placeholder="Search RoboPets"
+            />
+            <i class="bx bx-search-alt-2"></i>
+          </div>
+        </div>
+        <div class="right-pane">
+          <h3>Some Available Robots</h3>
+          <div class="robopet-list">
+            <ul id="filtered-list">
+              {% for pet in pets %}
+              <li>
+                <div class="robopet">
+                  <img
+                    src="{{ pet['image']}}"
+                    alt="RoboPet"
+                    width="75px"
+                    height="75px"
+                  />
+                  <p>{{ pet['name']}}</p>
+                  {% if currentPet %}
+                  {% else %}
+                    <button id="btn-select-{{pet['name']}}">Select</button>
+                  {% endif %}  
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</html>
