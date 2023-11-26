@@ -3,7 +3,7 @@
   <head>
     <title>RoboPety</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link
       rel="stylesheet"
       href="{{ url_for('static',
@@ -22,21 +22,28 @@
         <div class="left-pane">
           <div class="my-robopet">
             <h3>My RoboPet</h3>
+            {% if currentPet %}
             <div class="robopet">
               <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
+                src="{{ currentPet['image'] }}"
                 alt="RoboPet"
                 width="100px"
                 height="100px"
               />
-              <p>Name</p>
+              <p>{{ currentPet['name'] }}</p>
             </div>
-            <button class="return-btn">Return</button>
+            <button class="btn-return" id="btn-return">Return</button>
+            {% else %}
+              <div class="robopet">
+                <p>You do not have a RoboPet yet.</p>
+              </div>
+            {% endif %}
           </div>
           <div class="search-box">
             <input
               type="text"
               class="search-field"
+              id="search-field"
               placeholder="Search RoboPets"
             />
             <i class="bx bx-search-alt-2"></i>
@@ -45,109 +52,29 @@
         <div class="right-pane">
           <h3>Some Available Robots</h3>
           <div class="robopet-list">
-            <div class="robopet">
-              <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
-                alt="RoboPet"
-                width="75px"
-                height="75px"
-              />
-              <p>Name</p>
-              <button>Select</button>
-            </div>
-            <div class="robopet">
-              <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
-                alt="RoboPet"
-                width="75px"
-                height="75px"
-              />
-              <p>Name</p>
-              <button>Select</button>
-            </div>
-            <div class="robopet">
-              <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
-                alt="RoboPet"
-                width="75px"
-                height="75px"
-              />
-              <p>Name</p>
-              <button>Select</button>
-            </div>
-            <div class="robopet">
-              <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
-                alt="RoboPet"
-                width="75px"
-                height="75px"
-              />
-              <p>Name</p>
-              <button>Select</button>
-            </div>
-            <div class="robopet">
-              <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
-                alt="RoboPet"
-                width="75px"
-                height="75px"
-              />
-              <p>Name</p>
-              <button>Select</button>
-            </div>
-            <div class="robopet">
-              <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
-                alt="RoboPet"
-                width="75px"
-                height="75px"
-              />
-              <p>Name</p>
-              <button>Select</button>
-            </div>
-            <div class="robopet">
-              <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
-                alt="RoboPet"
-                width="75px"
-                height="75px"
-              />
-              <p>Name</p>
-              <button>Select</button>
-            </div>
-            <div class="robopet">
-              <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
-                alt="RoboPet"
-                width="75px"
-                height="75px"
-              />
-              <p>Name</p>
-              <button>Select</button>
-            </div>
-            <div class="robopet">
-              <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
-                alt="RoboPet"
-                width="75px"
-                height="75px"
-              />
-              <p>Name</p>
-              <button>Select</button>
-            </div>
-            <div class="robopet">
-              <img
-                src="https://cdn0.iconfinder.com/data/icons/animal-icons-flat/128/dog-512.png"
-                alt="RoboPet"
-                width="75px"
-                height="75px"
-              />
-              <p>Name</p>
-              <button>Select</button>
-            </div>
+            <ul id="filtered-list">
+              {% for pet in pets %}
+              <li>
+                <div class="robopet">
+                  <img
+                    src="{{ pet['image']}}"
+                    alt="RoboPet"
+                    width="75px"
+                    height="75px"
+                  />
+                  <p>{{ pet['name']}}</p>
+                  {% if currentPet %}
+                  {% else %}
+                    <button id="btn-select-{{pet['name']}}">Select</button>
+                  {% endif %}  
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </body>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </html>
