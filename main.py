@@ -1,4 +1,7 @@
 import datetime
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 from flask import Flask, redirect, url_for, request, render_template, session, jsonify
 from db import db, get_db_pet
@@ -114,9 +117,10 @@ def returnPet():
 def logout():
     session.clear()
     return redirect('/')
+    
 
 if __name__ == "__main__":
-    app.secret_key = 'super secret key'
+    app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
     # This is used when running locally only. When deploying to Google App
     # Engine, a webserver process such as Gunicorn will serve the app. This
