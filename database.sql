@@ -25,3 +25,17 @@ create table if not exists robots (
     photo_url varchar(255) not null,
     primary key (id)
 );
+
+
+-- this is the table for the user_robots
+-- the user_robots will have a user_id and a robot_id
+-- the user_id and robot_id will be foreign keys
+-- the id will be auto incremented
+create table if not exists user_robots (
+    id int not null auto_increment,
+    user_id int not null,
+    robot_id int not null,
+    primary key (id),
+    foreign key (user_id) references users(id),
+    foreign key (robot_id) references robots(id)
+);
