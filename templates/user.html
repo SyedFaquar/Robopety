@@ -16,14 +16,14 @@
   </head>
   <body>
     <div class="dashboard">
-      <h1>{{ username }}</h1>
-      <a href="/logout"> Log out </a>
+      <h1 id="username-display">{{ username }}</h1>
+      <p id="logout-p"> Log out </p>
       <div class="pane">
         <div class="left-pane">
           <div class="my-robopet">
             <h3>My RoboPet</h3>
             {% if currentPet %}
-            <div class="robopet">
+            <div class="robopet" id="user-robot">
               <img
                 src="{{ currentPet['image'] }}"
                 alt="RoboPet"
@@ -34,7 +34,7 @@
             </div>
             <button class="btn-return" id="btn-return">Return</button>
             {% else %}
-              <div class="robopet">
+              <div class="robopet" id="user-robot">
                 <p>You do not have a RoboPet yet.</p>
               </div>
             {% endif %}
@@ -50,7 +50,7 @@
           </div>
         </div>
         <div class="right-pane">
-          <h3>Some Available Robots</h3>
+          <h3>Available Robots</h3>
           <div class="robopet-list">
             <ul id="filtered-list">
               {% for pet in pets %}
