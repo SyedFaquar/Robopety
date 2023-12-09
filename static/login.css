@@ -17,23 +17,23 @@ body {
 .container {
     margin: 0 auto;
     width: 600px;
-    min-width: 600px;
-    min-height: 500px;
-    min-height: 100%;
-    padding: 5% 5%;
+    height: 500px;
+    padding: 25px 25px;
     background-color: rgba(155, 196, 196, 0.767);
     border: 2px;
     color: rgb(14, 51, 83);
 } 
 
 .container h1 {
+    height: 42px;
+    width: 550px;
     font-size: 36px;
     text-align: center;
 }
 
 .container form {
-    width: 100%;
-    height: 100%;
+    width: 550px;
+    height: 250px;
 }
 .container .input-box {
     width: 100%;

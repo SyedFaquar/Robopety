@@ -25,3 +25,11 @@ handlers:
     # the entire handlers section) when there are no static files defined.
   - url: /.*
     script: auto
+
+env_variables:
+  CLOUD_SQL_USERNAME: root
+  CLOUD_SQL_PASSWORD: -6uB+6(7_bHPGmGu
+  CLOUD_SQL_DATABASE_NAME: ROBOPETY
+  CLOUD_SQL_CONNECTION_NAME: csci0220-398518:us-central1:robo
+  JWT_SECRET: "1br13uh412obo12br1o2buo12bou123b"
+  BUCKET_NAME: "robo_images"

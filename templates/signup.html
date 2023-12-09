@@ -13,15 +13,27 @@
     <div class="container">
       <h1>RoboPety</h1>
       <br />
-      <form action="/signup" method="post">
+      <form id="signupForm" method="post">
         <h3>Email</h3>
         <div class="input-box">
           <input
             type="text"
             placeholder="Email"
+            id="email"
             name="email"
             value="{{
             request.form.email }}"
+          />
+        </div>
+        <h3>Username</h3>
+        <div class="input-box">
+          <input
+            type="text"
+            placeholder="Username"
+            id="username"
+            name="username"
+            value="{{
+            request.form.username }}"
           />
         </div>
         <h3>Password</h3>
@@ -29,6 +41,7 @@
           <input
             type="password"
             placeholder="Password"
+            id="password_1"
             name="password_1"
             value="{{
             request.form.password_1 }}"
@@ -38,6 +51,7 @@
         <div class="input-box">
           <input
             type="password"
+            id="password_2"
             placeholder="Password"
             name="password_2"
             value="{{
@@ -49,9 +63,8 @@
       <div class="register-link">
         <p>Already have an account? <a href="/login">login</a></p>
       </div>
-      {% if error %}
-      <p class="error">{{ error }}</p>
-      {% endif %}
+      <p class="error" id="errorText"></p>
     </div>
   </body>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </html>

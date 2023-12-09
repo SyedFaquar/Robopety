@@ -17,30 +17,30 @@ body {
 .container {
     margin: 0 auto;
     width: 600px;
-    min-width: 600px;
-    min-height: 500px;
-    padding: 5% 5%;
-    background-color: azure;
+    height: 700px;
+    padding: 25px 25px;
+    background-color: rgba(155, 196, 196, 0.767);
+    border: 2px;
     color: rgb(14, 51, 83);
 } 
 
 .container h1 {
+    height: 42px;
+    width: 550px;
     font-size: 36px;
     text-align: center;
-    padding: 20px;
 }
 
 .container .input-box {
     width: 100%;
     height: 50px;
-    background-color: azure;
     margin: 10px 0;
 }
 
 .input-box input {
     width: 100%;
     height: 100%;
-    background: transparent;
+    background: white;
     border: none;
     outline: none;
     border: 2px solid rgba(14, 10, 10, 0.2);
