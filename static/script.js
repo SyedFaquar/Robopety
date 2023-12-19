@@ -9,6 +9,13 @@ var nameText = document.getElementById("username-display");
 var filteredList = document.getElementById("filtered-list");
 var userRobotContainer = document.getElementById("user-robot");
 
+if (
+  !sessionStorage.getItem("token") &&
+  window.location.pathname === "/user/1"
+) {
+  window.location.href = "/login";
+}
+
 if (nameText) {
   var token = sessionStorage.getItem("token");
   fetch("/getusername", {
@@ -36,9 +43,6 @@ if (filteredList) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      console.log(data.all_robots);
-      console.log(data.user_robot);
       updateRobotList(filteredList, data.all_robots, data.user_robot);
     })
     .catch((error) => console.error("Error:", error));
@@ -55,19 +59,17 @@ if (userRobotContainer) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      console.log(data.robot);
       updateCurrentPet(data.robot);
     })
     .catch((error) => console.error("Error:", error));
 }
-// console.log(signupForm);
 
 logoutBtn?.addEventListener("click", (event) => {
   event.preventDefault();
   sessionStorage.clear();
   window.location.href = "/login";
 });
+
 filterField?.addEventListener("input", (event) => {
   event.preventDefault();
   filterPetList(event.target.value);
@@ -75,22 +77,47 @@ filterField?.addEventListener("input", (event) => {
 
 signupForm?.addEventListener("submit", function (event) {
   event.preventDefault();
-  console.log("checking inputs....");
   const formData = new FormData(event.target);
-  if (!formData.get("email")) {
+  email = formData.get("email");
+  username = formData.get("username");
+  password_1 = formData.get("password_1");
+  password_2 = formData.get("password_2");
+  if (!email) {
     errorField.innerText = "Please enter an email";
+    signupForm.reset();
     return;
-  } else if (!validateEmail(formData.get("email"))) {
+  } else if (!validateEmail(email)) {
     errorField.innerText = "Invalid email";
+    signupForm.reset();
     return;
-  } else if (!formData.get("password_1")) {
+  } else if (!password_1) {
     errorField.innerText = "Please enter a password";
+    signupForm.reset();
     return;
-  } else if (!formData.get("password_2")) {
+  } else if (!password_2) {
     errorField.innerText = "Password not match";
+    signupForm.reset();
+    return;
+  } else if (password_1 != password_2) {
+    errorField.innerText = "Password not match";
+    signupForm.reset();
+    return;
+  } else if (
+    !containsLowercase(password_1) ||
+    !containsLowercase(password_1) ||
+    !containsSymbol(password_1) ||
+    !containsNumber(password_1)
+  ) {
+    errorField.innerText =
+      "Password must be between 10 and 20 characters long and include at least one uppercase letter, one lowercase letter, and one symbol.";
+    signupForm.reset();
     return;
   }
-  console.log("sign up now.....");
+
+  if (!username) {
+    username = "User";
+  }
+
   fetch("/usersignup", {
     method: "POST",
     body: formData,
@@ -106,6 +133,7 @@ signupForm?.addEventListener("submit", function (event) {
       window.location.href = "/user/1";
     })
     .catch((error) => {
+      signupForm.reset();
       errorField.innerText = "Authentication failed: " + error.message;
     });
 });
@@ -115,15 +143,17 @@ loginForm?.addEventListener("submit", function (event) {
 
   // Get the input value
   const formData = new FormData(event.target);
-  console.log(errorField);
   if (!formData.get("email")) {
     errorField.innerText = "Please enter an email";
+    loginForm.reset();
     return;
   } else if (!validateEmail(formData.get("email"))) {
     errorField.innerText = "Invalid email";
+    loginForm.reset();
     return;
   } else if (!formData.get("password")) {
     errorField.innerText = "Please enter a password";
+    loginForm.reset();
     return;
   }
   // Make a POST request to the Flask server for authentication
@@ -138,28 +168,14 @@ loginForm?.addEventListener("submit", function (event) {
       return response.json();
     })
     .then((user) => {
-      console.log("User login.......");
-      console.log(user["username"]);
       sessionStorage.setItem("token", user["token"]);
-      // getPets();
       window.location.href = "/user/1";
     })
     .catch((error) => {
+      loginForm.reset();
       errorField.innerText = "Authentication failed: " + error.message;
     });
 });
-
-function getPets() {
-  fetch("/getpet")
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      const serializedPets = JSON.stringify(data);
-    })
-    .catch((error) => {
-      console.error("Failed to obtain pet data: ", error.message);
-    });
-}
 
 searchField?.addEventListener("input", (event) => {
   event.preventDefault();
@@ -175,7 +191,6 @@ function updateRobotList(list, robots, userRobots) {
 
 function updateCurrentPet(robot) {
   userRobotContainer.innerHTML = "";
-  // console.log(robot);
   if (robot.robot_id == -1) {
     var p = document.createElement("p");
     p.innerText = "You do not have a pet yet.";
@@ -197,12 +212,10 @@ function updateCurrentPet(robot) {
 }
 
 function createPetElement(listContainer, pet, userRobot) {
-  var li = document.createElement("li");
   var div = document.createElement("div");
   const img = createImageElement(pet.name, "75px");
   const p = createNameElement(pet.name);
-  listContainer.appendChild(li);
-  li.appendChild(div);
+  listContainer.appendChild(div);
   div.appendChild(img);
   div.appendChild(p);
   div.setAttribute("class", "robopet");
@@ -310,4 +323,30 @@ function validateEmail(email) {
     .match(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
+}
+
+function containsUppercase(str) {
+  return /[A-Z]/.test(str);
+}
+
+function containsLowercase(str) {
+  return /[a-z]/.test(str);
+}
+
+function containsSymbol(str) {
+  // Define the list of special characters
+  const specialChars = "`~!@#$%^&*()_+=-,./<>?;:'[]{}";
+
+  // Escape special characters that have special meanings in regex and create a character class
+  const escapedChars = specialChars.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+
+  // Create a regular expression using the special characters
+  const regex = new RegExp("[" + escapedChars + "]");
+
+  // Check if the string contains any of the special characters
+  return regex.test(str);
+}
+
+function containsNumber(str) {
+  return /\d/.test(str);
 }
