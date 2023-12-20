@@ -46,7 +46,7 @@ Initialize the gcloud CLI, run the following command:
 ```bash
   gcloud init
 ```
-To deploy your web service, you run the gcloud app deploy command from the root directory of your project, where your app.yaml file is located:
+To deploy the web service, you run the gcloud app deploy command from the root directory of your project, where your app.yaml file is located:
 
 ```bash
   gcloud app deploy
